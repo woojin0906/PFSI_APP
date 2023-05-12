@@ -21,18 +21,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/searchSupportInfo"
+        android:id="@+id/etSearch"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
         android:background="@drawable/underline"
-        app:layout_constraintEnd_toStartOf="@+id/searchBtn"
+        app:layout_constraintEnd_toStartOf="@+id/btnSearch"
         app:layout_constraintHorizontal_bias="0.692"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Button
-        android:id="@+id/searchBtn"
+        android:id="@+id/btnSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -42,11 +42,11 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvDonationList"
+        android:id="@+id/rvSupportInfoList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchSupportInfo"
+        app:layout_constraintTop_toBottomOf="@+id/etSearch"
         app:layout_constraintVertical_bias="0.087"
         tools:layout_editor_absoluteX="16dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
