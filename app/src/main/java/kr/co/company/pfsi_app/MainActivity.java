@@ -1,5 +1,5 @@
 package kr.co.company.pfsi_app;
-// 메인 액티비티 클래스 (2023-05-10 우진)
+// 메인 액티비티 클래스 (2023-05-10 우진) ㅗ
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
