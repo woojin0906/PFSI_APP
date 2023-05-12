@@ -1,5 +1,7 @@
 package kr.co.company.pfsi_app;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,9 +33,35 @@ public class SupportInfoAdapter extends RecyclerView.Adapter<SupportInfoAdapter.
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
         holder.programTitle.setText(arrayList.get(position).getProgramTitle());
         holder.time.setText(arrayList.get(position).getTime());
-        holder.phone.setText(arrayList.get(position).getTime());
+        holder.phone.setText(arrayList.get(position).getPhone());
         holder.group.setText(arrayList.get(position).getGroup());
         holder.city.setText(arrayList.get(position).getCity());
+
+        // 리사이클러뷰 클릭이벤트(선택된 리사이클러뷰 화면으로 이동)
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int mPosition = holder.getAdapterPosition();
+                Context context = view.getContext();
+
+                Intent intent = new Intent(context, SupportProgramInfoPostActivity.class);
+                intent.putExtra("city", arrayList.get(mPosition).getCity());
+                intent.putExtra("group", arrayList.get(mPosition).getGroup());
+                intent.putExtra("peopleState", arrayList.get(mPosition).getPeopleState());
+                intent.putExtra("peopleStateInfo", arrayList.get(mPosition).getPeopleStateInfo());
+                intent.putExtra("category", arrayList.get(mPosition).getCategory());
+                intent.putExtra("categoryInfo", arrayList.get(mPosition).getCategoryInfo());
+                intent.putExtra("programTitle", arrayList.get(mPosition).getProgramTitle());
+                intent.putExtra("time", arrayList.get(mPosition).getTime());
+                intent.putExtra("money", arrayList.get(mPosition).getMoney());
+                intent.putExtra("address", arrayList.get(mPosition).getAddress());
+                intent.putExtra("phone", arrayList.get(mPosition).getPhone());
+                intent.putExtra("programContent", arrayList.get(mPosition).getProgramContent());
+
+                (context).startActivity(intent);
+
+            }
+        });
     }
 
     @Override
