@@ -3,6 +3,7 @@ package kr.co.company.pfsi_app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // loding activity 실행
+        Intent intent = new Intent(this, LoadingActivity.class);
+        startActivity(intent);
 
         ChatVoiceBtn = findViewById(R.id.ChatVoiceBtn);
         MyInfoBtn = findViewById(R.id.MyInfoBtn);
@@ -41,7 +46,9 @@ public class MainActivity extends AppCompatActivity {
         UrgentContactInfoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(MainActivity.this, UrgentContactInfoActivity.class);
+                // 전화 화면
+                // *자신의 정보 등록 메뉴에서 저장된 보호자 연락처 사용
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:01012345678"));
                 startActivity(intent);
             }
         });
