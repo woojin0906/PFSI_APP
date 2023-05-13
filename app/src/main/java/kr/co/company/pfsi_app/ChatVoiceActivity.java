@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -39,6 +41,7 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
         mContext = this;
 
         btnStartInput = (Button)findViewById(R.id.btnStartInput);
+        tvInputVoice = (TextView)findViewById(R.id.tvInputVoice);
 
         // 오디오, 카메라 권한설정
         if ( Build.VERSION.SDK_INT >= 23 ){
@@ -149,9 +152,9 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
 
             String inputResult = "";
             for (int i = 0; i < matches.size(); i++) {
+                tvInputVoice.setText(matches.get(i));
                 inputResult += matches.get(i);
             }
-            tvInputVoice.setText(inputResult);
 
             // 입력받은 값을 넘겨줌
             funcVoiceOut(inputResult);
