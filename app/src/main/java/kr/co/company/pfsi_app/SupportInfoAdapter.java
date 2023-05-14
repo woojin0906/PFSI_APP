@@ -1,5 +1,5 @@
 package kr.co.company.pfsi_app;
-
+// 장애지원정보 액티비티 클래스 (2023-05-14 우진)
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;

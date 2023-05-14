@@ -1,5 +1,5 @@
 package kr.co.company.pfsi_app;
-
+// 장애지원정보 클래스 (2023-05-14 우진)
 public class SupportInfoData {
 
     private String city;
