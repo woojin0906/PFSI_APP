@@ -6,8 +6,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -27,6 +30,7 @@ public class SupportProgramInfoActivity extends AppCompatActivity {
     private EditText etSearch;
     private Button btnSearch;
     private String search = "notSearch";
+    private Spinner spinner;
 
     private String key="e9c8196a7d2b452ba115f668e045546a";
 
@@ -34,6 +38,39 @@ public class SupportProgramInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_support_program_info);
+
+        spinner = (Spinner)findViewById(R.id.spinner);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                search = (String) parent.getItemAtPosition(position);
+
+                // 리스트 item초기화
+                arrayList = new ArrayList<>();
+                adapter = new SupportInfoAdapter(arrayList);
+                recyclerView.setAdapter(adapter);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getXmlData(search);
+
+                        (SupportProgramInfoActivity.this).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                }).start();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         // List 설정
         recyclerView = findViewById(R.id.rvSupportInfoList);
@@ -173,10 +210,15 @@ public class SupportProgramInfoActivity extends AppCompatActivity {
                             // 검색 데이터가 없다면 모두 출력
                             if(search.equals("notSearch")) {
                                 arrayList.add(mainData);
+                            } else if(search.equals("전체")) {
+                                arrayList.add(mainData);
                             }
                             else{
                                 // 제목에 검색어를 포함하는 정보만 추가
                                 if(programTitle.contains(search)){
+                                    arrayList.add(mainData);
+                                }
+                                if(city.contains(search)) {
                                     arrayList.add(mainData);
                                 }
                             }

@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -31,7 +33,6 @@ public class SupportProgramInfoPostActivity extends AppCompatActivity {
         TVaddress = (TextView) findViewById(R.id.address);
         TVphone = (TextView) findViewById(R.id.phone);
         TVprogramContent = (TextView) findViewById(R.id.programContent);
-
 
         Intent receiveIntent = getIntent();
         final String city = receiveIntent.getStringExtra("city");
@@ -60,5 +61,14 @@ public class SupportProgramInfoPostActivity extends AppCompatActivity {
         TVphone.setText(phone);
         TVprogramContent.setText(programContent);
 
+
+        TVphone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 전화 화면
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + TVphone.getText().toString()));
+                startActivity(intent);
+            }
+        });
     }
 }
