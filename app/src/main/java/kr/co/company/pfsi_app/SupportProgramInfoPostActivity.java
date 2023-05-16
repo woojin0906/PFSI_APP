@@ -47,6 +47,8 @@ public class SupportProgramInfoPostActivity extends AppCompatActivity {
         final String address = receiveIntent.getStringExtra("address");
         final String phone = receiveIntent.getStringExtra("phone");
         final String programContent = receiveIntent.getStringExtra("programContent");
+        final String latitude = receiveIntent.getStringExtra("latitude");
+        final String longitude = receiveIntent.getStringExtra("longitude");
 
         TVcity.setText(city);
         TVgroup.setText(group);
@@ -67,6 +69,18 @@ public class SupportProgramInfoPostActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // 전화 화면
                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + TVphone.getText().toString()));
+                startActivity(intent);
+            }
+        });
+
+        TVaddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 지도 화면
+                Intent intent = new Intent(SupportProgramInfoPostActivity.this, SupportInfoMapActivity.class);
+                intent.putExtra("latitude", latitude);
+                intent.putExtra("longitude", longitude);
+
                 startActivity(intent);
             }
         });

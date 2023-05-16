@@ -57,6 +57,8 @@ public class SupportInfoAdapter extends RecyclerView.Adapter<SupportInfoAdapter.
                 intent.putExtra("address", arrayList.get(mPosition).getAddress());
                 intent.putExtra("phone", arrayList.get(mPosition).getPhone());
                 intent.putExtra("programContent", arrayList.get(mPosition).getProgramContent());
+                intent.putExtra("latitude", arrayList.get(mPosition).getLatitude());
+                intent.putExtra("longitude", arrayList.get(mPosition).getLongitude());
 
                 (context).startActivity(intent);
 
