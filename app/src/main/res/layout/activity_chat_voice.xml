@@ -10,15 +10,29 @@
         android:id="@+id/tvInputVoice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="음성채팅 결과"
+        android:text="입력값"
         android:textSize="8pt"
         tools:ignore="MissingConstraints"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.446"
+        app:layout_constraintHorizontal_bias="0.440"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.175" />
+        app:layout_constraintVertical_bias="0.170" />
+
+    <TextView
+        android:id="@+id/tvChatResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="챗봇 결과"
+        android:textSize="8pt"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.480"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.280" />
 
     <Button
         android:id="@+id/btnStartInput"
@@ -28,9 +42,9 @@
         tools:ignore="MissingConstraints"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintHorizontal_bias="0.500"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.289"  />
+        app:layout_constraintVertical_bias="0.390"  />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
