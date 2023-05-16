@@ -18,15 +18,24 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Locale;
 
 // 챗봇 음성채팅 액티비티 클래스 (2023-05-13 인범)
+// 05-17 챗봇 API 연동
 public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
-    Button btnStartInput;
-    TextView tvInputVoice;
+    private Button btnStartInput;
+    private TextView tvInputVoice, tvChatResult;
+    private String inputResult = "";
     public static Context mContext;
 
     Intent sttIntent;
@@ -42,6 +51,7 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
 
         btnStartInput = (Button)findViewById(R.id.btnStartInput);
         tvInputVoice = (TextView)findViewById(R.id.tvInputVoice);
+        tvChatResult = (TextView)findViewById(R.id.tvChatResult);
 
         // 오디오, 카메라 권한설정
         if ( Build.VERSION.SDK_INT >= 23 ){
@@ -150,14 +160,39 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
         public void onResults(Bundle results) {
             ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
 
-            String inputResult = "";
             for (int i = 0; i < matches.size(); i++) {
-                tvInputVoice.setText(matches.get(i));
                 inputResult += matches.get(i);
             }
 
-            // 입력받은 값을 넘겨줌
-            funcVoiceOut(inputResult);
+            // 입력값 출력
+            tvInputVoice.setText("입력 값 : " + inputResult);
+
+            // 입력값 음성 출력
+            funcVoiceOut("입력 값은 " + inputResult);
+
+            // 입력값 챗봇 전달
+            new Thread(new Runnable() {
+                String result = "";
+                @Override
+                public void run() {
+                    try {
+                        result = chatbotRequest(inputResult);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    (ChatVoiceActivity.this).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // 채팅 응답 출력
+                            tvChatResult.setText("응답 값 : "+result);
+
+                            // 채팅 응답 음성 출력
+                            funcVoiceOut("응답 값은 " + inputResult);
+                        }
+                    });
+                }
+            }).start();
 
         }
 
@@ -199,5 +234,43 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
             mRecognizer=null;
         }
         super.onDestroy();
+    }
+
+    // chatbotAPI 요청
+    private String chatbotRequest(String userInput) throws Exception {
+        try {
+            URL url = new URL("https://chatbot-api.run.goorm.site/");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setDoOutput(true);
+
+            JSONObject data = new JSONObject();
+            data.put("user_input", userInput);
+
+            OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
+            out.write(data.toString());
+            out.flush();
+            out.close();
+
+            String temp = "";
+            String content = "";
+            InputStream responseBody = conn.getInputStream();
+            InputStreamReader responseBodyReader =
+                    new InputStreamReader(responseBody, "UTF-8");
+            BufferedReader br = new BufferedReader( responseBodyReader );
+            while ((temp = br.readLine()) != null) {
+                content += temp;
+            }
+            JSONObject responseJson = new JSONObject(content);
+            Log.d("chatGPT 응답", responseJson.toString(2));
+            br.close();
+
+            return responseJson.toString(2);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
