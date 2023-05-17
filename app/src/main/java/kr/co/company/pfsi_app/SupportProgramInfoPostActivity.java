@@ -80,6 +80,8 @@ public class SupportProgramInfoPostActivity extends AppCompatActivity {
                 Intent intent = new Intent(SupportProgramInfoPostActivity.this, SupportInfoMapActivity.class);
                 intent.putExtra("latitude", latitude);
                 intent.putExtra("longitude", longitude);
+                intent.putExtra("group", group);
+                intent.putExtra("phone", phone);
 
                 startActivity(intent);
             }

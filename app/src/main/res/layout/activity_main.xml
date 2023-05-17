@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 메인 액티비티 (2023-05-10 우진) -->
+<!-- 메인 액티비티 (2023-05-17 우진) -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,75 +9,97 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:gravity="center"
         android:text="PROVI"
-        android:textColor="@color/black"
-        android:textSize="30dp"
+        android:textColor="#FFCC00"
+
+        android:textSize="45dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/ChatVoiceBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="GPT음성대화"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.446"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.175" />
+        android:layout_margin="20dp"/>
 
-    <Button
-        android:id="@+id/MyInfoBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="자신의 정보 등록"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.482"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.289" />
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/UrgentContactInfoBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="긴급연락"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.461" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="110dp"
+                android:gravity="center"
+                android:padding="7dp">
+            <Button
+                android:id="@+id/MyInfoBtn"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:drawableBottom="@drawable/user"
+                android:backgroundTint="@color/white"
+                android:background="#00ff0000"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-    <Button
-        android:id="@+id/SupportProgramInfoBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="지원프로그램정보제공"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.614" />
+                <Button
+                    android:id="@+id/UrgentContactInfoBtn"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:drawableBottom="@drawable/phone"
 
-    <Button
-        android:id="@+id/WelfareMapBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="복지시설위치제공"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.733" />
+                    android:background="#00ff0000"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="18dp" />
+            </LinearLayout>
 
+                <Button
+                    android:id="@+id/ChatVoiceBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/chatbot"
+                    android:layout_gravity="center"
+                    android:background="#00ff0000"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="18dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="7dp"
+                android:gravity="center"
+                android:layout_marginTop="375dp">
+            <Button
+                android:id="@+id/SupportProgramInfoBtn"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="#00ff0000"
+                android:drawableTop="@drawable/checklist"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toStartOf="@+id/WelfareMapBtn" />
+
+                <Button
+                    android:id="@+id/WelfareMapBtn"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:drawableTop="@drawable/school"
+                    android:background="#00ff0000"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
