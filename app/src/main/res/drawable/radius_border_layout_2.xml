@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 장애지원정보 리스트 Background (2023-05-17 우진)-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:start="1dp"
+        android:end="1dp"
+        android:top="1dp"
+        android:bottom="1dp" >
+
+        <shape android:shape="rectangle">
+            <stroke android:width="2dp"
+                android:color="#10000000"></stroke>
+            <solid android:color="#FDFCFA"/>
+            <corners
+                android:topLeftRadius="15dp"
+                android:topRightRadius="15dp"
+                android:bottomLeftRadius="15dp"
+                android:bottomRightRadius="15dp" />
+        </shape>
+    </item>
+</layer-list>

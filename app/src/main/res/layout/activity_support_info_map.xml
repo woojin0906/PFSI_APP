@@ -21,6 +21,10 @@
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:text="현재위치"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:layout_marginRight="7dp"
+                android:backgroundTint="#FFCC00"
                 android:layout_gravity="right"/>
         </FrameLayout>
 
