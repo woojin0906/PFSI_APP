@@ -35,7 +35,7 @@ import java.util.Locale;
 public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
     private Button btnStartInput;
     private TextView tvInputVoice, tvChatResult;
-    private String inputResult = "";
+    private String inputResult, chatResult;
     public static Context mContext;
 
     Intent sttIntent;
@@ -49,17 +49,17 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
         setContentView(R.layout.activity_chat_voice);
         mContext = this;
 
-        btnStartInput = (Button)findViewById(R.id.btnStartInput);
-        tvInputVoice = (TextView)findViewById(R.id.tvInputVoice);
-        tvChatResult = (TextView)findViewById(R.id.tvChatResult);
+        btnStartInput = (Button) findViewById(R.id.btnStartInput);
+        tvInputVoice = (TextView) findViewById(R.id.tvInputVoice);
+        tvChatResult = (TextView) findViewById(R.id.tvChatResult);
 
         // 오디오, 카메라 권한설정
-        if ( Build.VERSION.SDK_INT >= 23 ){
+        if (Build.VERSION.SDK_INT >= 23) {
             // 퍼미션 체크
             ActivityCompat.requestPermissions(this, new String[]{
                     Manifest.permission.INTERNET,
                     Manifest.permission.RECORD_AUDIO
-            },PERMISSION);
+            }, PERMISSION);
         }
 
         // STT, TTS 로드
@@ -68,7 +68,7 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
         // Button Click Event 설정
         btnStartInput.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 speechStart();
             }
         });
@@ -79,7 +79,7 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
         // stt 객체 생성, 초기화
         sttIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         sttIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());
-        sttIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,"ko-KR");
+        sttIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");
 
         // tts 객체 생성, 초기화
         tts = new TextToSpeech(ChatVoiceActivity.this, this);
@@ -159,6 +159,8 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
         @Override
         public void onResults(Bundle results) {
             ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+            inputResult = "";
+            chatResult = "";
 
             for (int i = 0; i < matches.size(); i++) {
                 inputResult += matches.get(i);
@@ -172,11 +174,10 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
 
             // 입력값 챗봇 전달
             new Thread(new Runnable() {
-                String result = "";
                 @Override
                 public void run() {
                     try {
-                        result = chatbotRequest(inputResult);
+                        chatResult = chatbotRequest(inputResult);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -185,10 +186,10 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
                         @Override
                         public void run() {
                             // 채팅 응답 출력
-                            tvChatResult.setText("응답 값 : "+result);
+                            tvChatResult.setText("응답 값 : " + chatResult);
 
                             // 채팅 응답 음성 출력
-                            funcVoiceOut("응답 값은 " + inputResult);
+                            funcVoiceOut("응답 값은 " + chatResult);
                         }
                     });
                 }
@@ -205,9 +206,9 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
         }
     };
 
-    public void funcVoiceOut(String OutMsg){
-        if(OutMsg.length()<1)return;
-        if(!tts.isSpeaking()) {
+    public void funcVoiceOut(String OutMsg) {
+        if (OutMsg.length() < 1) return;
+        if (!tts.isSpeaking()) {
             tts.speak(OutMsg, TextToSpeech.QUEUE_FLUSH, null);
         }
     }
@@ -228,10 +229,10 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
             tts.stop();
             tts.shutdown();
         }
-        if(mRecognizer!=null){
+        if (mRecognizer != null) {
             mRecognizer.destroy();
             mRecognizer.cancel();
-            mRecognizer=null;
+            mRecognizer = null;
         }
         super.onDestroy();
     }
@@ -239,7 +240,7 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
     // chatbotAPI 요청
     private String chatbotRequest(String userInput) throws Exception {
         try {
-            URL url = new URL("https://chatbot-api.run.goorm.site/");
+            URL url = new URL("https://chatbot-api.run.goorm.site/piuda");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
@@ -258,7 +259,7 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
             InputStream responseBody = conn.getInputStream();
             InputStreamReader responseBodyReader =
                     new InputStreamReader(responseBody, "UTF-8");
-            BufferedReader br = new BufferedReader( responseBodyReader );
+            BufferedReader br = new BufferedReader(responseBodyReader);
             while ((temp = br.readLine()) != null) {
                 content += temp;
             }

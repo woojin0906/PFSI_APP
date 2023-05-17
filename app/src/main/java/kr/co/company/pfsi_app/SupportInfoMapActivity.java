@@ -3,7 +3,10 @@ package kr.co.company.pfsi_app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
@@ -34,10 +37,14 @@ public class SupportInfoMapActivity extends AppCompatActivity implements TMapGps
 
     private double userLatitude = 37.570841;
     private double userLongitude = 126.985302;
+
+    private Context mContext = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_support_info_map);
+        mContext = this;
 
         Intent receiveIntent = getIntent();
         final String latitude = receiveIntent.getStringExtra("latitude");
@@ -84,6 +91,11 @@ public class SupportInfoMapActivity extends AppCompatActivity implements TMapGps
         markerItem1.setCalloutTitle(group); // 복지관명
         markerItem1.setCalloutSubTitle(phone);  // 전화번호
 
+        Bitmap bitmap = null;
+        bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.marker); // 마커 아이콘 변경
+
+        markerItem1.setPosition(0.5f, 1.0f);
+        markerItem1.setIcon(bitmap);
         markerItem1.setTMapPoint(point);
         markerItem1.setName(group);
         tMapView.addMarkerItem("markerItem1", markerItem1);
@@ -107,7 +119,6 @@ public class SupportInfoMapActivity extends AppCompatActivity implements TMapGps
                 }
             }
         }.start();
-
 
         // 현재위치로 돌아가는 버튼(TextView)
         button = findViewById(R.id.button);
