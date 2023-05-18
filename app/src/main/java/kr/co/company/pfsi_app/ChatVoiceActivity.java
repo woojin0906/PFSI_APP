@@ -167,10 +167,7 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
             }
 
             // 입력값 출력
-            tvInputVoice.setText("입력 값 : " + inputResult);
-
-            // 입력값 음성 출력
-            funcVoiceOut("입력 값은 " + inputResult);
+            tvInputVoice.setText("me : " + inputResult);
 
             // 입력값 챗봇 전달
             new Thread(new Runnable() {
@@ -178,6 +175,8 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
                 public void run() {
                     try {
                         chatResult = chatbotRequest(inputResult);
+                        chatResult = chatResult.substring(1, -2);
+                        Log.d("chatResult", chatResult);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -186,10 +185,10 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
                         @Override
                         public void run() {
                             // 채팅 응답 출력
-                            tvChatResult.setText("응답 값 : " + chatResult);
+                            tvChatResult.setText("provi : "+chatResult);
 
                             // 채팅 응답 음성 출력
-                            funcVoiceOut("응답 값은 " + chatResult);
+                            funcVoiceOut(chatResult);
                         }
                     });
                 }
@@ -240,7 +239,7 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
     // chatbotAPI 요청
     private String chatbotRequest(String userInput) throws Exception {
         try {
-            URL url = new URL("https://chatbot-api.run.goorm.site/piuda");
+            URL url = new URL("https://chatbotapi-gpt-inofu.run.goorm.site/piuda");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
@@ -271,6 +270,7 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
 
         } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(getApplicationContext(), "서버에 문제가 발생하였습니다. 나중에 다시 시도해주세요", Toast.LENGTH_SHORT).show();
         }
         return "";
     }
