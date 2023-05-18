@@ -32,7 +32,7 @@ public class SupportProgramInfoActivity extends AppCompatActivity {
     private String search = "notSearch";
     private Spinner spinner;
 
-    private String key="e9c8196a7d2b452ba115f668e045546a";
+    private String key="e320cf1e2719466b8c09f3dc812fc3de";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +136,7 @@ public class SupportProgramInfoActivity extends AppCompatActivity {
             XmlPullParser xpp= factory.newPullParser();
             xpp.setInput( new InputStreamReader(is, "UTF-8") ); //inputstream 으로부터 xml 입력받기
 
-            String tag, city = "", group = "", peopleState = "", peopleStateInfo = "", category = "", categoryInfo = "", programTitle = "", time = "", money = "", address = "", phone = "", programContent = "";
+            String tag, city = "", group = "", peopleState = "", peopleStateInfo = "", category = "", categoryInfo = "", programTitle = "", time = "", money = "", address = "", phone = "", programContent = "", latitude = "", longitude = "";
 
             xpp.next();
             int eventType= xpp.getEventType();
@@ -196,6 +196,14 @@ public class SupportProgramInfoActivity extends AppCompatActivity {
                             xpp.next();
                             programContent = xpp.getText();
                         }
+                        else if(tag.equals("REFINE_WGS84_LAT")){ // 위도
+                            xpp.next();
+                            latitude = xpp.getText();
+                        }
+                        else if(tag.equals("REFINE_WGS84_LOGT")){ // 경도
+                            xpp.next();
+                            longitude = xpp.getText();
+                        }
                         break;
 
                     case XmlPullParser.TEXT:
@@ -205,7 +213,7 @@ public class SupportProgramInfoActivity extends AppCompatActivity {
                         tag= xpp.getName(); //테그 이름 얻어오기
 
                         if(tag.equals("row")) {
-                            SupportInfoData mainData = new SupportInfoData(city, group, peopleState, peopleStateInfo, category, categoryInfo, programTitle, time, money, address, phone, programContent);
+                            SupportInfoData mainData = new SupportInfoData(city, group, peopleState, peopleStateInfo, category, categoryInfo, programTitle, time, money, address, phone, programContent, latitude, longitude);
 
                             // 검색 데이터가 없다면 모두 출력
                             if(search.equals("notSearch")) {

@@ -2,15 +2,21 @@ package kr.co.company.pfsi_app;
 // 메인 액티비티 클래스 (2023-05-10 우진)
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button ChatVoiceBtn, MyInfoBtn, UrgentContactInfoBtn, SupportProgramInfoBtn, WelfareMapBtn;
+    private DatabaseOpenHelper dbHelper;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +26,10 @@ public class MainActivity extends AppCompatActivity {
         // loding activity 실행
         Intent intent = new Intent(this, LoadingActivity.class);
         startActivity(intent);
+
+        // DatabaseOpenHelper 객체 생성
+        dbHelper = new DatabaseOpenHelper(this, "mydatabase.db", null, 1);
+        db = dbHelper.getWritableDatabase();
 
         ChatVoiceBtn = findViewById(R.id.ChatVoiceBtn);
         MyInfoBtn = findViewById(R.id.MyInfoBtn);
@@ -44,11 +54,24 @@ public class MainActivity extends AppCompatActivity {
         });
 
         UrgentContactInfoBtn.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("Range")
             @Override
             public void onClick(View v) {
                 // 전화 화면
                 // *자신의 정보 등록 메뉴에서 저장된 보호자 연락처 사용
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:01012345678"));
+                Cursor cursor = dbHelper.selectInfo(db);
+                String gardianPhone = "";
+
+                // 결과 처리
+                if (cursor != null && cursor.moveToFirst()) {
+                    do {
+                        gardianPhone = cursor.getString(cursor.getColumnIndex("gardianPhone"));
+
+                    } while (cursor.moveToNext());
+                    cursor.close();
+                }
+
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+gardianPhone));
                 startActivity(intent);
             }
         });

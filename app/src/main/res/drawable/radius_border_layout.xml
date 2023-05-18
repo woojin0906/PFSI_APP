@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 장애지원정보 리스트 Background (2023-05-12 우진)-->
+<!-- 장애지원정보 리스트 Background (2023-05-17 우진)-->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 <item
     android:start="1dp"
@@ -10,7 +10,7 @@
     <shape android:shape="rectangle">
         <stroke android:width="2dp"
             android:color="#10000000"></stroke>
-        <solid android:color="#fdfeff"/>
+        <solid android:color="#FBF9F2"/>
         <corners
             android:topLeftRadius="15dp"
             android:topRightRadius="15dp"

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 지원 프로그램 지도(주소 제공) 액티비티 (2023-05-16 우진) -->
+<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WelfareMapActivity">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/linearLayoutTmap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            </LinearLayout>
+            <Button
+                android:id="@+id/button"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="현재위치"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:layout_marginRight="7dp"
+                android:backgroundTint="#FFCC00"
+                android:layout_gravity="right"/>
+        </FrameLayout>
+
+</android.widget.LinearLayout>

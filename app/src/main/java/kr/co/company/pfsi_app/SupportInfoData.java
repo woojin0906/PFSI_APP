@@ -14,8 +14,10 @@ public class SupportInfoData {
     private String address;
     private String phone;
     private String programContent;
+    private String latitude;
+    private String longitude;
 
-    public SupportInfoData(String city, String group, String peopleState, String peopleStateInfo, String category, String categoryInfo, String programTitle, String time, String money, String address, String phone, String programContent) {
+    public SupportInfoData(String city, String group, String peopleState, String peopleStateInfo, String category, String categoryInfo, String programTitle, String time, String money, String address, String phone, String programContent, String latitude, String longitude) {
         this.city = city;
         this.group = group;
         this.peopleState = peopleState;
@@ -28,6 +30,8 @@ public class SupportInfoData {
         this.address = address;
         this.phone = phone;
         this.programContent = programContent;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getCity() {
@@ -124,6 +128,22 @@ public class SupportInfoData {
 
     public void setProgramContent(String programContent) {
         this.programContent = programContent;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 
 }
