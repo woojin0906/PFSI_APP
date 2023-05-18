@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".WelfareMapActivity">
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/linearLayoutTmap"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-    </LinearLayout>
-</android.widget.LinearLayout>
+
+        <Button
+            android:id="@+id/BtnSetTrackingMode"
+            android:layout_width="54dp"
+            android:layout_height="47dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="550dp"
+            android:background="@drawable/radius_border_layout" />
+
+    </FrameLayout>
+</android.widget.FrameLayout>
