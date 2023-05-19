@@ -59,7 +59,7 @@ public class SupportInfoMapActivity extends AppCompatActivity implements TMapGps
             requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
 
-        LinearLayout linearLayoutTmap = (LinearLayout)findViewById(R.id.frameLayoutTmap);
+        LinearLayout linearLayoutTmap = (LinearLayout)findViewById(R.id.linearLayoutTmap);
         tMapView = new TMapView(this);
 
         tMapView.setSKTMapApiKey( api_key );
