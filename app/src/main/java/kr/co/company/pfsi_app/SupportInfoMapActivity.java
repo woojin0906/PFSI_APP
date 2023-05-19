@@ -11,7 +11,6 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -60,7 +59,7 @@ public class SupportInfoMapActivity extends AppCompatActivity implements TMapGps
             requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
 
-        LinearLayout linearLayoutTmap = (LinearLayout)findViewById(R.id.linearLayoutTmap);
+        LinearLayout linearLayoutTmap = (LinearLayout)findViewById(R.id.frameLayoutTmap);
         tMapView = new TMapView(this);
 
         tMapView.setSKTMapApiKey( api_key );
