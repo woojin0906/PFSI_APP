@@ -2,6 +2,8 @@ package kr.co.company.pfsi_app;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.Context;
@@ -15,6 +17,8 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,14 +32,26 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 // 챗봇 음성채팅 액티비티 클래스 (2023-05-13 인범)
 // 05-17 챗봇 API 연동
 public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
-    private Button btnStartInput;
-    private TextView tvInputVoice, tvChatResult;
+//    private Button btnStartInput;
+//    private TextView tvInputVoice, tvChatResult;
     private String inputResult, chatResult;
+    private RecyclerView recyclerView;
+    private EditText inputEditText;
+    private Button sendButton;
+    private ChatAdapter chatAdapter;
+    private List<ChatItem> chatItems;
+
+    private ImageButton voiceButton;
+
+    private String userMessage, chatbotMessage;
+
     public static Context mContext;
 
     Intent sttIntent;
@@ -49,9 +65,17 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
         setContentView(R.layout.activity_chat_voice);
         mContext = this;
 
-        btnStartInput = findViewById(R.id.btnStartInput);
-        tvInputVoice = findViewById(R.id.tvInputVoice);
-        tvChatResult = findViewById(R.id.tvChatResult);
+        recyclerView = findViewById(R.id.recyclerView);
+        inputEditText = findViewById(R.id.inputEditText);
+        sendButton = findViewById(R.id.sendButton);
+        voiceButton = findViewById(R.id.voiceButton);
+
+        chatItems = new ArrayList<>();
+        chatAdapter = new ChatAdapter(chatItems);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(chatAdapter);
 
         // 오디오, 카메라 권한설정
         if (Build.VERSION.SDK_INT >= 23) {
@@ -65,11 +89,71 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
         // STT, TTS 로드
         speechInit();
 
-        // Button Click Event 설정
-        btnStartInput.setOnClickListener(new View.OnClickListener() {
+        // 음성 입력 버튼
+        voiceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 문자입력 비활성화
+                sendButton.setClickable(false);
+                inputEditText.setClickable(false);
+                inputEditText.setFocusable(false);
+
+                voiceButton.setImageResource(R.drawable.mike_on);
+
+                // 음성입력 시작
                 speechStart();
+            }
+        });
+
+        // 전송 버튼
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userMessage = inputEditText.getText().toString().trim();
+                if (!userMessage.isEmpty()) {
+                    // 사용자의 메시지를 ChatItem에 추가
+                    ChatItem userChatItem = new ChatItem();
+                    userChatItem.setMessage(userMessage);
+                    userChatItem.setSenderName("사용자");
+                    userChatItem.setProfileImageResId(R.drawable.user);
+                    userChatItem.setTimestamp(new Date());
+                    chatItems.add(userChatItem);
+
+                    // 입력값 챗봇 전달
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                chatbotMessage = chatbotRequest(userMessage);
+                                chatbotMessage = chatbotMessage.substring(1, -2);
+                                Log.d("chatbotMessage", chatbotMessage);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            (ChatVoiceActivity.this).runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // 채팅 응답 출력
+                                    // 챗봇의 응답을 ChatItem에 추가
+                                    ChatItem botChatItem = new ChatItem();
+                                    botChatItem.setMessage(chatbotMessage);
+                                    botChatItem.setSenderName("프로비");
+                                    botChatItem.setProfileImageResId(R.drawable.chatbot);
+                                    botChatItem.setTimestamp(new Date());
+                                    chatItems.add(botChatItem);
+
+                                    chatAdapter.notifyDataSetChanged();
+                                    inputEditText.setText("");
+
+                                    // 채팅 응답 음성 출력
+                                    funcVoiceOut(chatbotMessage);
+                                }
+                            });
+                        }
+                    }).start();
+
+                }
             }
         });
     }
@@ -154,45 +238,75 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
             String guideStr = "에러가 발생하였습니다.";
             Toast.makeText(getApplicationContext(), guideStr + message, Toast.LENGTH_SHORT).show();
             funcVoiceOut(guideStr);
+
+            // 텍스트 입력 활성화
+            sendButton.setClickable(true);
+            inputEditText.setFocusable(true);
+            inputEditText.setClickable(true);
+
+            voiceButton.setImageResource(R.drawable.mike_off);
         }
 
         @Override
         public void onResults(Bundle results) {
             ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
             inputResult = "";
-            chatResult = "";
 
             for (int i = 0; i < matches.size(); i++) {
                 inputResult += matches.get(i);
             }
 
-            // 입력값 출력
-            tvInputVoice.setText("me : " + inputResult);
+            if (!inputResult.isEmpty()) {
+                // 사용자의 메시지를 ChatItem에 추가
+                ChatItem userChatItem = new ChatItem();
+                userChatItem.setMessage(inputResult);
+                userChatItem.setSenderName("사용자");
+                userChatItem.setProfileImageResId(R.drawable.user);
+                userChatItem.setTimestamp(new Date());
+                chatItems.add(userChatItem);
 
-            // 입력값 챗봇 전달
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        chatResult = chatbotRequest(inputResult);
-                        chatResult = chatResult.substring(1, -2);
-                        Log.d("chatResult", chatResult);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    (ChatVoiceActivity.this).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // 채팅 응답 출력
-                            tvChatResult.setText("provi : "+chatResult);
-
-                            // 채팅 응답 음성 출력
-                            funcVoiceOut(chatResult);
+                // 입력값 챗봇 전달
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            chatbotMessage = chatbotRequest(inputResult);
+                            chatbotMessage = chatbotMessage.substring(1, -2);
+                            Log.d("chatbotMessage", chatbotMessage);
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    });
-                }
-            }).start();
+
+                        (ChatVoiceActivity.this).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                // 채팅 응답 출력
+                                // 챗봇의 응답을 ChatItem에 추가
+                                ChatItem botChatItem = new ChatItem();
+                                botChatItem.setMessage(chatbotMessage);
+                                botChatItem.setSenderName("프로비");
+                                botChatItem.setProfileImageResId(R.drawable.chatbot);
+                                botChatItem.setTimestamp(new Date());
+                                chatItems.add(botChatItem);
+
+                                chatAdapter.notifyDataSetChanged();
+                                inputEditText.setText("");
+
+                                // 채팅 응답 음성 출력
+                                funcVoiceOut(chatbotMessage);
+                            }
+                        });
+                    }
+                }).start();
+
+            }
+
+            // 텍스트 입력 활성화
+            sendButton.setClickable(true);
+            inputEditText.setFocusable(true);
+            inputEditText.setClickable(true);
+
+            voiceButton.setImageResource(R.drawable.mike_off);
 
         }
 
