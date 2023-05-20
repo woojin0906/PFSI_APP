@@ -9,8 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder> {
 
@@ -61,7 +63,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     }
 
     private String formatTimestamp(Date timestamp) {
-        // 원하는 형식에 맞게 시간을 포맷팅하는 로직을 작성하세요.
-        return "4:20";
+        // 한국 서울 시간대로 설정
+        TimeZone seoulTimeZone = TimeZone.getTimeZone("Asia/Seoul");
+        TimeZone.setDefault(seoulTimeZone);
+
+        // 현재 시간 가져오기
+        Date currentTime = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        String formattedTime = dateFormat.format(currentTime);
+        return formattedTime;
     }
 }

@@ -22,6 +22,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
@@ -38,15 +41,17 @@ import java.util.Locale;
 
 // 챗봇 음성채팅 액티비티 클래스 (2023-05-13 인범)
 // 05-17 챗봇 API 연동
+// 05-20 채팅 UI 구현
 public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
-//    private Button btnStartInput;
-//    private TextView tvInputVoice, tvChatResult;
+
     private String inputResult, chatResult;
     private RecyclerView recyclerView;
     private EditText inputEditText;
     private Button sendButton;
     private ChatAdapter chatAdapter;
     private List<ChatItem> chatItems;
+
+    private LinearLayoutManager layoutManager;
 
     private ImageButton voiceButton;
 
@@ -69,6 +74,8 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
         inputEditText = findViewById(R.id.inputEditText);
         sendButton = findViewById(R.id.sendButton);
         voiceButton = findViewById(R.id.voiceButton);
+
+        layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
         chatItems = new ArrayList<>();
         chatAdapter = new ChatAdapter(chatItems);
@@ -144,6 +151,11 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
                                     chatItems.add(botChatItem);
 
                                     chatAdapter.notifyDataSetChanged();
+
+                                    // RecyclerView에 아이템이 추가될 때마다 포커싱 맞추기
+                                    int newItemPosition = chatItems.size() - 1;
+                                    layoutManager.scrollToPosition(newItemPosition);
+
                                     inputEditText.setText("");
 
                                     // 채팅 응답 음성 출력
@@ -290,6 +302,11 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
                                 chatItems.add(botChatItem);
 
                                 chatAdapter.notifyDataSetChanged();
+
+                                // RecyclerView에 아이템이 추가될 때마다 포커싱 맞추기
+                                int newItemPosition = chatItems.size() - 1;
+                                layoutManager.scrollToPosition(newItemPosition);
+
                                 inputEditText.setText("");
 
                                 // 채팅 응답 음성 출력
@@ -380,7 +397,14 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
             Log.d("chatGPT 응답", responseJson.toString(2));
             br.close();
 
-            return responseJson.toString(2);
+            String jsonMessage = responseJson.toString(2);
+
+            // 응답 값만 추출
+            Gson gson = new Gson();
+            JsonObject jsonObject = gson.fromJson(jsonMessage, JsonObject.class);
+            String valueMessage = jsonObject.get("piuda").getAsString();
+
+            return valueMessage;
 
         } catch (Exception e) {
             e.printStackTrace();
