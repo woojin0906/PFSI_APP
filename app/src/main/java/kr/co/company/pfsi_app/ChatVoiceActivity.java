@@ -49,9 +49,9 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
         setContentView(R.layout.activity_chat_voice);
         mContext = this;
 
-        btnStartInput = (Button) findViewById(R.id.btnStartInput);
-        tvInputVoice = (TextView) findViewById(R.id.tvInputVoice);
-        tvChatResult = (TextView) findViewById(R.id.tvChatResult);
+        btnStartInput = findViewById(R.id.btnStartInput);
+        tvInputVoice = findViewById(R.id.tvInputVoice);
+        tvChatResult = findViewById(R.id.tvChatResult);
 
         // 오디오, 카메라 권한설정
         if (Build.VERSION.SDK_INT >= 23) {
