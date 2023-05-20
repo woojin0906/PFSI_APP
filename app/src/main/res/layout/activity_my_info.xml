@@ -17,41 +17,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
-            android:text="나의 정보"
+            android:text="아이카드(ICard)"
             android:textColor="@color/black"
             android:textSize="30dp"
             android:textStyle="bold"
             android:layout_gravity="center"/>
 
+
+        <TextView
+            android:id="@+id/tvIntro"
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="소개"
+            android:textColor="@color/black"
+            android:textSize="20dp"/>
+
         <ImageView
             android:id="@+id/ivProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="50dp"
             android:layout_gravity="center"
             android:src="@drawable/user"/>
-
-        <LinearLayout
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="소개"
-                android:textColor="@color/black"
-                android:textSize="20dp"/>
-            <TextView
-                android:id="@+id/tvIntro"
-                android:layout_marginLeft="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="소개"
-                android:textColor="@color/black"
-                android:textSize="20dp"/>
-        </LinearLayout>
 
         <LinearLayout
             android:layout_marginLeft="50dp"
@@ -106,15 +95,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="연락처"
+                android:text="주소"
                 android:textColor="@color/black"
                 android:textSize="20dp"/>
             <TextView
-                android:id="@+id/tvContact"
+                android:id="@+id/tvAddress"
                 android:layout_marginLeft="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="연락처"
+                android:text="주소"
                 android:textColor="@color/black"
                 android:textSize="20dp"/>
         </LinearLayout>
@@ -128,15 +117,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="주소"
+                android:text="연락처"
                 android:textColor="@color/black"
                 android:textSize="20dp"/>
             <TextView
-                android:id="@+id/tvAddress"
+                android:id="@+id/tvContact"
                 android:layout_marginLeft="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="주소"
+                android:text="연락처"
                 android:textColor="@color/black"
                 android:textSize="20dp"/>
         </LinearLayout>
@@ -209,15 +198,15 @@
             android:layout_height="wrap_content"
             android:hint="생년월일"/>
         <EditText
-            android:id="@+id/etPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="연락처"/>
-        <EditText
             android:id="@+id/etAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="주소"/>
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="연락처"/>
         <EditText
             android:id="@+id/etGardianPhone"
             android:layout_width="match_parent"
