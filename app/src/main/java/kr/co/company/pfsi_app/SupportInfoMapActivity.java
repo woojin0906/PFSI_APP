@@ -99,10 +99,32 @@ public class SupportInfoMapActivity extends AppCompatActivity implements TMapGps
         markerItem1.setName(group);
         tMapView.addMarkerItem("markerItem1", markerItem1);
 
-        TMapPoint tMapPointStart = new TMapPoint(37.570841, 126.985302); // 출발지
+
+
+        // 현재위치로 돌아가는 버튼(TextView)
+        button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                  // 화면중심을 단말의 현재위치로 이동
+                  tMapView.setTrackingMode(true);
+                  tMapView.setSightVisible(true);
+                  tMapView.setZoomLevel(15);
+                }
+        });
+
+    }
+
+    @Override
+    public void onLocationChange(Location location) {
+        tMapView.setLocationPoint(location.getLongitude(), location.getLatitude());
+        tMapView.setCenterPoint(location.getLongitude(), location.getLatitude());
+
+        userLongitude = location.getLongitude();
+        userLatitude = location.getLatitude();
+
+        TMapPoint tMapPointStart = new TMapPoint(userLatitude, userLongitude); // 출발지
         TMapPoint tMapPointEnd = new TMapPoint(Latitude, Longitude); // 목적지
-//        TMapPoint tMapPointStart = new TMapPoint(37.570841, 126.985302); // SKT타워(출발지)
-//        TMapPoint tMapPointEnd = new TMapPoint(37.551135, 126.988205); // N서울타워(목적지)
 
         new Thread() {
             @Override
@@ -118,26 +140,5 @@ public class SupportInfoMapActivity extends AppCompatActivity implements TMapGps
                 }
             }
         }.start();
-
-        // 현재위치로 돌아가는 버튼(TextView)
-        button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                  // 화면중심을 단말의 현재위치로 이동
-                  tMapView.setTrackingMode(true);
-                  tMapView.setSightVisible(true);
-                }
-        });
-
-    }
-
-    @Override
-    public void onLocationChange(Location location) {
-        tMapView.setLocationPoint(location.getLongitude(), location.getLatitude());
-        tMapView.setCenterPoint(location.getLongitude(), location.getLatitude());
-
-        userLongitude = location.getLongitude();
-        userLatitude = location.getLatitude();
     }
 }
