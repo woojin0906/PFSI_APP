@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
@@ -31,10 +32,13 @@ public class WelfareMapActivity extends AppCompatActivity implements TMapGpsMana
     private TMapPoint tpoint = null;
     private Button btnSetTrackingMode;
 
+    private Context mContext = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welfare_map);
+        mContext = this;
 
         // 권한 설정
         if (Build.VERSION.SDK_INT >= 23) {
@@ -87,30 +91,31 @@ public class WelfareMapActivity extends AppCompatActivity implements TMapGpsMana
 
     private void multipleMarkers() {
         WelfareMapApi parser = new WelfareMapApi();
-        ArrayList<MapPoint> mapPoint = new ArrayList<MapPoint>();
+        ArrayList<WelfareMapPoint> welfareMapPoint = new ArrayList<WelfareMapPoint>();
         try {
-            mapPoint = parser.apiParserSearch();
+            welfareMapPoint = parser.apiParserSearch();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        for (int i = 0; i < mapPoint.size(); i++) {
-            for (MapPoint entity : mapPoint) {
-                TMapPoint point = new TMapPoint(mapPoint.get(i).getLatitude(), mapPoint.get(i).getLongitude());
+        for (int i = 0; i < welfareMapPoint.size(); i++) {
+            for (WelfareMapPoint entity : welfareMapPoint) {
+                TMapPoint point = new TMapPoint(welfareMapPoint.get(i).getLatitude(), welfareMapPoint.get(i).getLongitude());
                 TMapMarkerItem item = new TMapMarkerItem();
-//                Bitmap bitmap = null;
-//                bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.marker);
+
+                // 마커 아이콘 설정
+                Bitmap bitmap = null;
+                bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.marker);
+                item.setIcon(bitmap);
 
                 item.setPosition(0.5f, 1.0f);
-//                item.setIcon(bitmap);
-
-                item.setCalloutTitle(mapPoint.get(i).getName());
-                item.setCalloutSubTitle(mapPoint.get(i).getPhone());
+                item.setCalloutTitle(welfareMapPoint.get(i).getName());
+                item.setCalloutSubTitle(welfareMapPoint.get(i).getPhone());
                 item.setCanShowCallout(true);
                 item.setAutoCalloutVisible(true);
 
                 item.setTMapPoint(point);
                 item.setName(entity.getName());
-                tMapView.setCenterPoint(mapPoint.get(i).getLongitude(), mapPoint.get(i).getLatitude());
+                tMapView.setCenterPoint(welfareMapPoint.get(i).getLongitude(), welfareMapPoint.get(i).getLatitude());
                 tMapView.addMarkerItem("item" + i, item);
 
             }

@@ -1,6 +1,6 @@
 package kr.co.company.pfsi_app;
 
-public class MapPoint {
+public class WelfareMapPoint {
 
     private String name;
     private String phone;
@@ -8,11 +8,11 @@ public class MapPoint {
     private double latitude;
     private double longitude;
 
-    public MapPoint() {
+    public WelfareMapPoint() {
         super();
     }
 
-    public MapPoint(String name, String phone, String addr, double latitude, double longitude) {
+    public WelfareMapPoint(String name, String phone, String addr, double latitude, double longitude) {
         this.name = name;
         this.phone = phone;
         this.addr = addr;

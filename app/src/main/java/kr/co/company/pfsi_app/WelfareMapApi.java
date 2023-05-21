@@ -16,7 +16,7 @@ public class WelfareMapApi {
             e.printStackTrace();
         }
     }
-    public ArrayList<MapPoint> apiParserSearch() throws Exception {
+    public ArrayList<WelfareMapPoint> apiParserSearch() throws Exception {
         URL url = new URL(getURLParam(null));
 
         XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
@@ -28,7 +28,7 @@ public class WelfareMapApi {
         String tag = null;
         int event_type = xpp.getEventType();
 
-        ArrayList<MapPoint> mapPoint = new ArrayList<MapPoint>();
+        ArrayList<WelfareMapPoint> welfareMapPoint = new ArrayList<WelfareMapPoint>();
 
         String facility_name = null, phone=null, addr=null, longitude=null, latitude=null;
         boolean bName = false, bPhone = false, bAddr = false, bLongitude = false, bLatitude = false;
@@ -70,17 +70,17 @@ public class WelfareMapApi {
             }else if (event_type == XmlPullParser.END_TAG) {
                 tag = xpp.getName();
                 if(tag.equals("item")) {
-                    MapPoint entity = new MapPoint();
+                    WelfareMapPoint entity = new WelfareMapPoint();
                     entity.setName(facility_name);
                     entity.setLatitude(Double.valueOf(latitude));
                     entity.setLongitude(Double.valueOf(longitude));
                     entity.setPhone(phone);
                     entity.setAddr(addr);
-                    mapPoint.add(entity);
+                    welfareMapPoint.add(entity);
                 }
             } event_type = xpp.next();
-        } System.out.println(mapPoint.size());
-        return  mapPoint;
+        } System.out.println(welfareMapPoint.size());
+        return welfareMapPoint;
     }
 
     private  String getURLParam(String search) {
