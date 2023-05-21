@@ -54,11 +54,6 @@ public class SupportInfoMapActivity extends AppCompatActivity implements TMapGps
         Latitude = Double.parseDouble(latitude);
         Longitude = Double.parseDouble(longitude);
 
-        // GPS 권한 요청
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        }
-
         LinearLayout linearLayoutTmap = (LinearLayout)findViewById(R.id.linearLayoutTmap);
         tMapView = new TMapView(this);
 
@@ -75,7 +70,9 @@ public class SupportInfoMapActivity extends AppCompatActivity implements TMapGps
         tmapgps.setMinDistance(1);             // 일정 거리마다 리셋
         tmapgps.setProvider(tmapgps.NETWORK_PROVIDER); // 네트워크에 맞춰 현재 위치 표시  -> 디바이스로 실행할 때 사용
 //      tmapgps.setProvider(tmapgps.GPS_PROVIDER);       //GPS  ->  애뮬레이터로 실행할 때 사용
+
         tmapgps.OpenGps();
+
         // 화면중심을 단말의 현재위치로 이동
         tMapView.setTrackingMode(true);
         tMapView.setSightVisible(true);

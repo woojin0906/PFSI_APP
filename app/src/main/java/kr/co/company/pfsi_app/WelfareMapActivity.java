@@ -7,6 +7,7 @@ import android.Manifest;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.skt.Tmap.TMapGpsManager;
@@ -24,7 +26,6 @@ import com.skt.Tmap.TMapView;
 import java.util.ArrayList;
 
 public class WelfareMapActivity extends AppCompatActivity implements TMapGpsManager.onLocationChangedCallback {
-    private static final int PERMISSION = 1;
     private String api_key = "WDUOyZdacml2BjQXwZJL2PDCzymCNXM4U6HOF5td";
     private TMapView tMapView = null;
     private TMapGpsManager tmapgps = null;
@@ -40,25 +41,14 @@ public class WelfareMapActivity extends AppCompatActivity implements TMapGpsMana
         setContentView(R.layout.activity_welfare_map);
         mContext = this;
 
-        // 권한 설정
-        if (Build.VERSION.SDK_INT >= 23) {
-            ActivityCompat.requestPermissions(this, new String[]{
-                    android.Manifest.permission.INTERNET,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-            }, PERMISSION);
-        }
-
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
         // T Map View
-        FrameLayout frameLayoutTmap = (FrameLayout) findViewById(R.id.frameLayoutTmap);
         tMapView = new TMapView(this);
 
         // API Key
         tMapView.setSKTMapApiKey(api_key);
-        frameLayoutTmap.addView(tMapView);
         multipleMarkers();
 
         tMapView.setZoomLevel(17);
@@ -66,10 +56,14 @@ public class WelfareMapActivity extends AppCompatActivity implements TMapGpsMana
         tMapView.setMapType(TMapView.MAPTYPE_STANDARD);
         tMapView.setLanguage(TMapView.LANGUAGE_KOREAN);
 
-        tmapgps = new TMapGpsManager(WelfareMapActivity.this);
+        LinearLayout linearLayoutTmap = (LinearLayout)findViewById(R.id.linearLayoutTmap);
+        linearLayoutTmap.addView(tMapView);
+
+        tmapgps = new TMapGpsManager(this);
         tmapgps.setMinTime(1000);
         tmapgps.setMinDistance(5);
         tmapgps.setProvider(tmapgps.NETWORK_PROVIDER);
+//      tmapgps.setProvider(tmapgps.GPS_PROVIDER);
 
         tMapView.setTrackingMode(true);
         tMapView.setSightVisible(true);
@@ -104,8 +98,9 @@ public class WelfareMapActivity extends AppCompatActivity implements TMapGpsMana
 
                 // 마커 아이콘 설정
                 Bitmap bitmap = null;
-                bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.marker);
-                item.setIcon(bitmap);
+                BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.marker);
+                Bitmap b=bitmapdraw.getBitmap();
+                item.setIcon(b);
 
                 item.setPosition(0.5f, 1.0f);
                 item.setCalloutTitle(welfareMapPoint.get(i).getName());
