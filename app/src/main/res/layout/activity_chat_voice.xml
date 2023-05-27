@@ -38,6 +38,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#FFFF77"
             android:textColor="@color/black"
+            android:backgroundTint="#FFCC00"
             android:text="전송" />
 
     </LinearLayout>
