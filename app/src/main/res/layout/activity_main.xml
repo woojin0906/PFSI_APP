@@ -50,7 +50,7 @@
                 android:drawableBottom="@drawable/user"
                 android:textColor="@color/black"
                 android:textSize="18dp"
-                android:text="내 정보  > "
+                android:text="내 정보 > "
                 android:textStyle="bold"
                 android:gravity="left"
                 android:paddingBottom="20dp" />
@@ -63,7 +63,7 @@
                 android:drawableBottom="@drawable/phone"
                 android:textColor="@color/black"
                 android:textSize="18dp"
-                android:text="긴급 연락  > "
+                android:text="긴급 연락 > "
                 android:textStyle="bold"
                 android:gravity="left"
                 android:paddingBottom="20dp" />
@@ -81,7 +81,7 @@
             android:textColor="@color/black"
             android:layout_gravity="center"
             android:textSize="18dp"
-            android:text="음성 인식 챗봇  > "
+            android:text="음성 인식 챗봇 > "
             android:textStyle="bold"
             android:gravity="left"
             android:paddingBottom="20dp" />
@@ -102,7 +102,7 @@
                 android:drawableBottom="@drawable/checklist"
                 android:textColor="@color/black"
                 android:textSize="18dp"
-                android:text="지원 프로그램  > "
+                android:text="지원 프로그램 > "
                 android:textStyle="bold"
                 android:gravity="left"
                 android:paddingBottom="20dp" />
@@ -115,7 +115,7 @@
                 android:drawableBottom="@drawable/school"
                 android:textColor="@color/black"
                 android:textSize="18dp"
-                android:text="복지관 위치  > "
+                android:text="복지관 위치 > "
                 android:textStyle="bold"
                 android:gravity="left"
                 android:paddingBottom="20dp" />
