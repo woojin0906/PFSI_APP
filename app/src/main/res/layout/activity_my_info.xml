@@ -60,7 +60,7 @@
                 android:src="@drawable/user"
                 android:background="@drawable/layout_radius_mypage_image"
                 android:layout_marginTop="65dp"
-                android:padding="15dp"/>
+                android:padding="20dp"/>
 
         </FrameLayout>
 
@@ -74,7 +74,7 @@
             android:orientation="vertical">
 
         <LinearLayout
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
         </LinearLayout>
 
             <LinearLayout
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -143,7 +143,7 @@
             </LinearLayout>
 
         <LinearLayout
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -166,7 +166,7 @@
         </LinearLayout>
 
             <LinearLayout
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -222,9 +222,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:textSize="10pt"
+            android:textSize="25dp"
             android:textStyle="bold"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:gravity="center"
             android:text="정보 등록"/>
 
@@ -233,42 +233,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:textSize="9pt"
+            android:textSize="18dp"
             android:hint="소개"/>
         <EditText
             android:id="@+id/etName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:textSize="9pt"
+            android:textSize="18dp"
             android:hint="이름"/>
         <EditText
             android:id="@+id/etBirth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:textSize="9pt"
+            android:textSize="18dp"
             android:hint="생년월일"/>
         <EditText
             android:id="@+id/etAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:textSize="9pt"
+            android:textSize="18dp"
             android:hint="주소"/>
         <EditText
             android:id="@+id/etPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:textSize="9pt"
+            android:textSize="18dp"
             android:hint="연락처"/>
         <EditText
             android:id="@+id/etGardianPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:textSize="9pt"
+            android:textSize="18dp"
             android:hint="보호자 연락처"/>
 
         <LinearLayout
@@ -279,14 +279,14 @@
                 android:id="@+id/btnRegister"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#88D88F"
+                android:backgroundTint="#7AC180"
                 android:text="등록"/>
             <Button
                 android:id="@+id/btnCancel"
                 android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#88D88F"
+                android:backgroundTint="#7AC180"
                 android:text="취소"/>
         </LinearLayout>
 
