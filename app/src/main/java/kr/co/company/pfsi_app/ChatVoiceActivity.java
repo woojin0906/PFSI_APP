@@ -304,8 +304,8 @@ public class ChatVoiceActivity extends AppCompatActivity implements TextToSpeech
                                 chatAdapter.notifyDataSetChanged();
 
                                 // RecyclerView에 아이템이 추가될 때마다 포커싱 맞추기
-                                int newItemPosition = chatItems.size() - 1;
-                                layoutManager.scrollToPosition(newItemPosition);
+//                                int newItemPosition = chatItems.size() - 1;
+//                                layoutManager.scrollToPosition(newItemPosition);
 
                                 inputEditText.setText("");
 
