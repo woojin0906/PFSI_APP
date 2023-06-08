@@ -34,8 +34,8 @@ public class SupportInfoMapActivity extends AppCompatActivity implements TMapGps
     private double Latitude;
     private double Longitude;
 
-    private double userLatitude = 37.570841;
-    private double userLongitude = 126.985302;
+    private double userLatitude;
+    private double userLongitude;
 
     private Context mContext = null;
 
